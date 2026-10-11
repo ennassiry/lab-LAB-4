@@ -1,121 +1,78 @@
 
 package lab4_4;
+public class TestVoiture {
+    public static void main(String[] args) {
+        // Création des objets (déjà fait)
+        Voiture voiture1 = new Voiture();
+        Voiture voiture2 = new Voiture("Toyota", "Corolla", 0.0, 2023);
+        Voiture voiture3 = new Voiture(voiture2);
 
-public class Voiture {
+        System.out.println("=== Modification de voiture2 ===");
+        voiture2.accelerer(120);
+        voiture2.freiner(30);
+        voiture2.afficherInformations();
 
-	// Attributs privés
-	private String marque;
-	private String modele;
-	private double vitesse;
-	private int annee;
+        System.out.println("\n=== Modification de voiture3 ===");
+        voiture3.accelerer(80);
+        voiture3.afficherInformations();
 
-	// Constructeur par défaut
-	public Voiture() {
-		this.marque = "Inconnue";
-		this.modele = "Standard";
-		this.vitesse = 0.0;
-		this.annee = 2024;
-	}
+        System.out.println("\n=== Test des setters avec validation ===");
+        voiture2.setVitesse(-50); // Doit échouer
+        voiture2.setAnnee(1800); // Doit échouer
+        voiture2.setMarque(""); // Doit échouer
+        voiture2.afficherInformations();
 
-	// Constructeur paramétré
-	public Voiture(String marque, String modele, double vitesse, int annee) {
-		this.marque = marque;
-		this.modele = modele;
-		this.vitesse = vitesse;
-		this.annee = annee;
-	}
+        System.out.println("\n=== Comparaison finale ===");
+        voiture2.afficherInformations();
+     
+        voiture3.afficherInformations();
+        
+        
+        System.out.println("=== TESTS DES VALIDATIONS ===");
 
-	// Constructeur de copie
-	public Voiture(Voiture autreVoiture) {
-		this.marque = autreVoiture.marque;
-		this.modele = autreVoiture.modele;
-		this.vitesse = autreVoiture.vitesse;
-		this.annee = autreVoiture.annee;
-		System.out.println("Constructeur de copie appelé.");
-	}
+        Voiture voiture = new Voiture("Renault", "Clio", 0.0, 2022);
 
-	// Getters : récupérer les valeurs des attributs
-	public String getMarque() {
-		return marque;
-	}
+        // Test 1 : Vitesse négative
+        System.out.println("\nTest 1 : Vitesse négative");
+        voiture.setVitesse(-10);
+        System.out.println("Vitesse actuelle : " + voiture.getVitesse());
 
-	public String getModele() {
-		return modele;
-	}
+        // Test 2 : Vitesse nulle
+        System.out.println("\nTest 2 : Vitesse nulle");
+        voiture.setVitesse(0);
+        System.out.println("Vitesse actuelle : " + voiture.getVitesse());
 
-	public double getVitesse() {
-		return vitesse;
-	}
+        // Test 3 : Année invalide (trop ancienne)
+        System.out.println("\nTest 3 : Année invalide (trop ancienne)");
+        voiture.setAnnee(1800);
+        System.out.println("Année actuelle : " + voiture.getAnnee());
 
-	public int getAnnee() {
-		return annee;
-	}
+        // Test 4 : Année invalide (future)
+        System.out.println("\nTest 4 : Année invalide (future)");
+        voiture.setAnnee(2050);
+        System.out.println("Année actuelle : " + voiture.getAnnee());
 
-	// Setters : modifier les attributs avec validation
-	public void setMarque(String marque) {
-		if (marque != null && !marque.trim().isEmpty()) {
-			this.marque = marque;
-		} else {
-			System.out.println("Erreur : La marque ne peut pas être vide.");
-		}
-	}
+        // Test 5 : Marque vide
+        System.out.println("\nTest 5 : Marque vide");
+        voiture.setMarque("");
+        System.out.println("Marque actuelle : " + voiture.getMarque());
 
-	public void setModele(String modele) {
-		if (modele != null && !modele.trim().isEmpty()) {
-			this.modele = modele;
-		} else {
-			System.out.println("Erreur : Le modèle ne peut pas être vide.");
-		}
-	}
+        // Test 6 : Marque null
+        System.out.println("\nTest 6 : Marque null");
+        voiture.setMarque(null);
+        System.out.println("Marque actuelle : " + voiture.getMarque());
 
-	public void setVitesse(double vitesse) {
-		if (vitesse >= 0) {
-			this.vitesse = vitesse;
-		} else {
-			System.out.println("Erreur : La vitesse ne peut pas être négative.");
-		}
-	}
+        // Test 7 : Accélération négative
+        System.out.println("\nTest 7 : Accélération négative");
+        voiture.accelerer(-50);
+        System.out.println("Vitesse actuelle : " + voiture.getVitesse());
 
-	public void setAnnee(int annee) {
-		int anneeCourante = java.time.Year.now().getValue();
-		if (annee > 1885 && annee <= anneeCourante) {
-			this.annee = annee;
-		} else {
-			System.out.println("Erreur : Année invalide.");
-		}
-	}
+        // Test 8 : Freinage excessif
+        System.out.println("\nTest 8 : Freinage excessif");
+        voiture.setVitesse(20);
+        voiture.freiner(50);
+        System.out.println("Vitesse actuelle : " + voiture.getVitesse());
 
-	// Augmenter la vitesse
-	public void accelerer(double augmentation) {
-		if (augmentation > 0) {
-			this.vitesse += augmentation;
-			System.out.println("Nouvelle vitesse : " + vitesse + " km/h.");
-		} else {
-			System.out.println("Erreur : Augmentation invalide.");
-		}
-	}
-
-	// Réduire la vitesse sans passer sous zéro
-	public void freiner(double reduction) {
-		if (reduction > 0) {
-			if (this.vitesse - reduction < 0) {
-				this.vitesse = 0;
-			} else {
-				this.vitesse -= reduction;
-			}
-			System.out.println("Nouvelle vitesse : " + vitesse + " km/h.");
-		} else {
-			System.out.println("Erreur : Réduction invalide.");
-		}
-	}
-
-	// Afficher les informations de la voiture
-	public void afficherInformations() {
-		System.out.println("=== Informations de la Voiture ===");
-		System.out.println("Marque : " + marque);
-		System.out.println("Modèle : " + modele);
-		System.out.println("Vitesse : " + vitesse + " km/h");
-		System.out.println("Année : " + annee);
-		System.out.println("=================================");
-	}
-}
+        voiture.afficherInformations();
+    }
+    }
