@@ -1,46 +1,121 @@
 
 package lab4_4;
 
-public class TestVoiture {
+public class Voiture {
 
-    public static void main(String[] args) {
+	// Attributs privés
+	private String marque;
+	private String modele;
+	private double vitesse;
+	private int annee;
 
-        // 1. Création d'une voiture avec le constructeur par défaut
-        Voiture voiture1 = new Voiture();
-        voiture1.afficherInformations();
+	// Constructeur par défaut
+	public Voiture() {
+		this.marque = "Inconnue";
+		this.modele = "Standard";
+		this.vitesse = 0.0;
+		this.annee = 2024;
+	}
 
-        // 2. Création d'une voiture avec le constructeur paramétré
-        Voiture voiture2 = new Voiture("BMW", "Serie 3", 90.0, 2022);
-        voiture2.afficherInformations();
+	// Constructeur paramétré
+	public Voiture(String marque, String modele, double vitesse, int annee) {
+		this.marque = marque;
+		this.modele = modele;
+		this.vitesse = vitesse;
+		this.annee = annee;
+	}
 
-        // 3. Création d'une copie de voiture2
-        Voiture voiture3 = new Voiture(voiture2);
-        voiture3.afficherInformations();
+	// Constructeur de copie
+	public Voiture(Voiture autreVoiture) {
+		this.marque = autreVoiture.marque;
+		this.modele = autreVoiture.modele;
+		this.vitesse = autreVoiture.vitesse;
+		this.annee = autreVoiture.annee;
+		System.out.println("Constructeur de copie appelé.");
+	}
 
-        // 4. Modification de la vitesse de voiture3
-        voiture3.accelerer(30.0);
+	// Getters : récupérer les valeurs des attributs
+	public String getMarque() {
+		return marque;
+	}
 
-        // 5. Freinage de voiture2
-        voiture2.freiner(20.0);
+	public String getModele() {
+		return modele;
+	}
 
-        // 6. Affichage des informations après les modifications
-        System.out.println("\n--- Après les modifications ---");
+	public double getVitesse() {
+		return vitesse;
+	}
 
-        System.out.println("Voiture 2 :");
-        voiture2.afficherInformations();
+	public int getAnnee() {
+		return annee;
+	}
 
-        System.out.println("Voiture 3 :");
-        voiture3.afficherInformations();
+	// Setters : modifier les attributs avec validation
+	public void setMarque(String marque) {
+		if (marque != null && !marque.trim().isEmpty()) {
+			this.marque = marque;
+		} else {
+			System.out.println("Erreur : La marque ne peut pas être vide.");
+		}
+	}
 
-        // 7. Comparaison des références des objets
-        System.out.println("\n--- Comparaison des objets ---");
+	public void setModele(String modele) {
+		if (modele != null && !modele.trim().isEmpty()) {
+			this.modele = modele;
+		} else {
+			System.out.println("Erreur : Le modèle ne peut pas être vide.");
+		}
+	}
 
-        System.out.println(
-            "voiture1 == voiture2 ? " + (voiture1 == voiture2)
-        );
+	public void setVitesse(double vitesse) {
+		if (vitesse >= 0) {
+			this.vitesse = vitesse;
+		} else {
+			System.out.println("Erreur : La vitesse ne peut pas être négative.");
+		}
+	}
 
-        System.out.println(
-            "voiture2 == voiture3 ? " + (voiture2 == voiture3)
-        );
-    }
+	public void setAnnee(int annee) {
+		int anneeCourante = java.time.Year.now().getValue();
+		if (annee > 1885 && annee <= anneeCourante) {
+			this.annee = annee;
+		} else {
+			System.out.println("Erreur : Année invalide.");
+		}
+	}
+
+	// Augmenter la vitesse
+	public void accelerer(double augmentation) {
+		if (augmentation > 0) {
+			this.vitesse += augmentation;
+			System.out.println("Nouvelle vitesse : " + vitesse + " km/h.");
+		} else {
+			System.out.println("Erreur : Augmentation invalide.");
+		}
+	}
+
+	// Réduire la vitesse sans passer sous zéro
+	public void freiner(double reduction) {
+		if (reduction > 0) {
+			if (this.vitesse - reduction < 0) {
+				this.vitesse = 0;
+			} else {
+				this.vitesse -= reduction;
+			}
+			System.out.println("Nouvelle vitesse : " + vitesse + " km/h.");
+		} else {
+			System.out.println("Erreur : Réduction invalide.");
+		}
+	}
+
+	// Afficher les informations de la voiture
+	public void afficherInformations() {
+		System.out.println("=== Informations de la Voiture ===");
+		System.out.println("Marque : " + marque);
+		System.out.println("Modèle : " + modele);
+		System.out.println("Vitesse : " + vitesse + " km/h");
+		System.out.println("Année : " + annee);
+		System.out.println("=================================");
+	}
 }
