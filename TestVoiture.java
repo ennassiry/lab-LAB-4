@@ -1,30 +1,46 @@
-package com.lab4.tp;
+
+package lab4_4;
 
 public class TestVoiture {
 
-	
-	public static void main(String[] args) {
+    public static void main(String[] args) {
+
+        // 1. Création d'une voiture avec le constructeur par défaut
         Voiture voiture1 = new Voiture();
-        Voiture voiture2 = new Voiture("Toyota", "Corolla", 0.0, 2023);
+        voiture1.afficherInformations();
+
+        // 2. Création d'une voiture avec le constructeur paramétré
+        Voiture voiture2 = new Voiture("BMW", "Serie 3", 90.0, 2022);
+        voiture2.afficherInformations();
+
+        // 3. Création d'une copie de voiture2
         Voiture voiture3 = new Voiture(voiture2);
-
-        System.out.println("=== Modification de voiture2 ===");
-        voiture2.accelerer(120);
-        voiture2.freiner(30);
-        voiture2.afficherInformations();
-
-        System.out.println("\n=== Modification de voiture3 ===");
-        voiture3.accelerer(80);
         voiture3.afficherInformations();
 
-        System.out.println("\n=== Test des setters avec validation ===");
-        voiture2.setVitesse(-50); // Doit échouer
-        voiture2.setAnnee(1800); // Doit échouer
-        voiture2.setMarque(""); // Doit échouer
+        // 4. Modification de la vitesse de voiture3
+        voiture3.accelerer(30.0);
+
+        // 5. Freinage de voiture2
+        voiture2.freiner(20.0);
+
+        // 6. Affichage des informations après les modifications
+        System.out.println("\n--- Après les modifications ---");
+
+        System.out.println("Voiture 2 :");
         voiture2.afficherInformations();
 
-        System.out.println("\n=== Comparaison finale ===");
-        voiture2.afficherInformations();
+        System.out.println("Voiture 3 :");
         voiture3.afficherInformations();
+
+        // 7. Comparaison des références des objets
+        System.out.println("\n--- Comparaison des objets ---");
+
+        System.out.println(
+            "voiture1 == voiture2 ? " + (voiture1 == voiture2)
+        );
+
+        System.out.println(
+            "voiture2 == voiture3 ? " + (voiture2 == voiture3)
+        );
     }
 }
